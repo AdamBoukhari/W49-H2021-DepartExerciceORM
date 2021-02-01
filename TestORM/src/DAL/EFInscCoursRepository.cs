@@ -56,5 +56,33 @@ namespace TestORMCodeFirst.DAL
             contexte.SaveChanges();
         }
 
+        public int? NombreEtudiantsInscrits(string codeCours, string session)
+        {
+            return contexte.InscCours.Where(cours => cours.CodeSession == session && cours.CodeCours == codeCours).Count();
+        }
+
+        public int? NombreInscriptionsCours(short etudiantId, string session)
+        {
+            return contexte.InscCours.Where(cours => cours.EtudiantID == etudiantId && cours.CodeSession == session).Count();
+        }
+
+        public void MettreAJourNoteFinale(short etudiantID, string cours, string session, short note)
+        {
+            InscriptionCours inscr = contexte.InscCours.Find(etudiantID, cours, session);
+            if (inscr != null)
+            {
+                inscr.NoteFinale = note;
+                contexte.InscCours.Update(inscr);
+            }
+            contexte.SaveChanges();
+        }
+        public double? ObtenirPourUneClasseLaMoyenne(string cours, string session)
+        {
+            return contexte.InscCours.Where(insc => insc.CodeCours == cours && insc.CodeSession == session).Average(insc => insc.NoteFinale);
+        }
+        public int ObtenirPourUneClasseNombreEchecs(string cours, string session)
+        {
+            return contexte.InscCours.Where(insc => insc.CodeCours == cours && insc.NoteFinale < 60).Count();
+        }
     }
 }

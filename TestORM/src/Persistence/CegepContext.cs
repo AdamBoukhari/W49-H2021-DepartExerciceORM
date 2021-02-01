@@ -18,8 +18,8 @@ namespace TestORMCodeFirst.Persistence
 
         public virtual DbSet<Etudiant> Etudiants { get; set; }  
         public virtual DbSet<InscriptionCours> InscCours { get; set; }
-        
 
+        public virtual DbSet<Cours> Cours { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)  //Fluent API configuration has the highest precedence and will override conventions and data annotations. This is the most powerful method of configuration
         {
@@ -43,7 +43,18 @@ namespace TestORMCodeFirst.Persistence
                         .WithMany(etud => etud.Cours)
                         .OnDelete(DeleteBehavior.Restrict);
 
-       }
+
+            builder.Entity<InscriptionCours>()
+                        .HasOne(inscription => inscription.Cours)
+                        .WithMany(cours => cours.Etudiants)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+            //Etudiant
+            builder.Entity<Cours>()
+                        .HasIndex(e => e.CodeCours)
+                        .IsUnique();
+
+        }
 
     }
 }

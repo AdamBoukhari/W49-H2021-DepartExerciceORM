@@ -15,6 +15,8 @@ namespace TestORMCodeFirst.Entities
         [Required]
         public short EtudiantID { get; set; }
 
+        public short NoteFinale { get; set; }
+
         [Required]
         [Column(TypeName = "varchar(10)")]
         public string CodeCours { get; set; }
@@ -26,6 +28,11 @@ namespace TestORMCodeFirst.Entities
         //Propriétés de navigation
         [ForeignKey("EtudiantID")]
         public virtual Etudiant Etudiant { get; set; }
+
+        //Propriétés de navigation
+
+        [ForeignKey("CodeCours")]
+        public virtual Cours Cours { get; set; }
 
     }
 }
