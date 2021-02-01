@@ -66,6 +66,7 @@
     <Compile Include="src\Persistence\CegepContext.cs" />
     <Compile Include="src\Presentation\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test\EFCoursRepositoryTest .cs" />
     <Compile Include="test\EFEtudiantRepositoryTest.cs" />
     <Compile Include="test\EFInsCoursRepositoryTest.cs" />
   </ItemGroup>

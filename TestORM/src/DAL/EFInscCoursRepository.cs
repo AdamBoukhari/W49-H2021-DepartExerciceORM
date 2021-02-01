@@ -78,11 +78,16 @@ namespace TestORMCodeFirst.DAL
         }
         public double? ObtenirPourUneClasseLaMoyenne(string cours, string session)
         {
-            return contexte.InscCours.Where(insc => insc.CodeCours == cours && insc.CodeSession == session).Average(insc => insc.NoteFinale);
+            ICollection<InscriptionCours> inscr = contexte.InscCours.Where(insc => insc.CodeCours == cours && insc.CodeSession == session).ToList();
+            if (inscr != null)
+            {
+                return inscr.Average(insc => insc.NoteFinale);
+            }
+            return null;
         }
         public int ObtenirPourUneClasseNombreEchecs(string cours, string session)
         {
-            return contexte.InscCours.Where(insc => insc.CodeCours == cours && insc.NoteFinale < 60).Count();
+            return contexte.InscCours.Where(insc => insc.CodeCours == cours&& insc.CodeSession==session && insc.NoteFinale < 60).Count();
         }
     }
 }
